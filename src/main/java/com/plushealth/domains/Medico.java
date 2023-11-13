@@ -35,8 +35,7 @@ public class Medico implements Serializable {
 		super();
 	}
 
-	public Medico(Integer id, String nome, String crm, String especialidade, String email, String telefone,
-			List<Consulta> consultas) {
+	public Medico(Integer id, String nome, String crm, String especialidade, String email, String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -44,7 +43,6 @@ public class Medico implements Serializable {
 		this.especialidade = especialidade;
 		this.email = email;
 		this.telefone = telefone;
-		this.consultas = consultas;
 	}
 
 	public Integer getId() {
