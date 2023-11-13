@@ -1,16 +1,32 @@
 package com.plushealth.domains;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Paciente {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
+public class Paciente implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Integer idade;
 	private String sexo;
+	
+	@Column(unique = true)
 	private String email;
 	private String telefone;
+	
+	@OneToMany(mappedBy = "paciente")
 	private List<Consulta> consultas = new ArrayList<>();
 	
 	public Paciente() {
@@ -83,4 +99,5 @@ public class Paciente {
 		this.consultas = consultas;
 	}
 
+	
 }
