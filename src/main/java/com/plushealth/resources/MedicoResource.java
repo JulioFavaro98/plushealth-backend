@@ -18,6 +18,8 @@ import com.plushealth.domains.Medico;
 import com.plushealth.domains.dtos.MedicoDTO;
 import com.plushealth.services.MedicoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/medicos")
 public class MedicoResource {
@@ -39,7 +41,7 @@ public class MedicoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<MedicoDTO> create(@RequestBody MedicoDTO objDTO){
+	public ResponseEntity<MedicoDTO> create(@Valid @RequestBody MedicoDTO objDTO){
 		Medico newObj = medicoService.create(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();

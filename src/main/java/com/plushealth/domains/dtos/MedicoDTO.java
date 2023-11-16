@@ -4,15 +4,22 @@ import java.io.Serializable;
 
 import com.plushealth.domains.Medico;
 
+import jakarta.validation.constraints.NotNull;
+
 public class MedicoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
-	private String nome;
-	private String crm;
-	private String especialidade;
-	private String email;
-	private String telefone;
+	protected Integer id;
+	@NotNull(message = "O campo NOME é requerido")
+	protected String nome;
+	@NotNull(message = "O campo CRM é requerido")
+	protected String crm;
+	@NotNull(message = "O campo ESPECIALIDADE é requerido")
+	protected String especialidade;
+	@NotNull(message = "O campo E-MAIL é requerido")
+	protected String email;
+	@NotNull(message = "O campo TELEFONE é requerido")
+	protected String telefone;
 	
 	public MedicoDTO() {
 		super();
