@@ -1,5 +1,8 @@
 package com.plushealth.resources;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,13 @@ public class MedicoResource {
 	public ResponseEntity<MedicoDTO> findById(@PathVariable Integer id){
 		Medico obj = medicoService.findById(id);
 		return ResponseEntity.ok().body(new MedicoDTO(obj));
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<MedicoDTO>> findAll(){
+		List<Medico> list = medicoService.findAll();
+		List<MedicoDTO> listDTO = list.stream().map(obj -> new MedicoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 }
