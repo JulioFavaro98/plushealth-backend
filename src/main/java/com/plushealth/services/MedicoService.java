@@ -12,6 +12,8 @@ import com.plushealth.repositories.MedicoRepository;
 import com.plushealth.services.exceptions.DataIntegrityViolationException;
 import com.plushealth.services.exceptions.ObjectNotFoundException;
 
+import jakarta.validation.Valid;
+
 @Service
 public class MedicoService {
 
@@ -44,6 +46,22 @@ public class MedicoService {
 		if(obj.isPresent() && obj.get().getId() != objDTO.getId()) {
 			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
 		}
+	}
+
+	public Medico update(Integer id, @Valid MedicoDTO objDTO) {
+		objDTO.setId(id);
+		Medico oldObj = findById(id);
+		validaPorCrmEEmail(objDTO);
+		oldObj = new Medico(objDTO);
+		return repository.save(oldObj);
+	}
+
+	public void delete(Integer id) {
+		Medico obj = findById(id);
+		if(obj.getConsultas().size() > 0) {
+			throw new DataIntegrityViolationException("Tecnico possui ordens de serviço e não pode ser deletado!");
+		} 
+		repository.deleteById(id);
 	}
 	
 	
