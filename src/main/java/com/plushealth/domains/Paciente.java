@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +28,7 @@ public class Paciente implements Serializable {
 	private String email;
 	private String telefone;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "paciente")
 	private List<Consulta> consultas = new ArrayList<>();
 	
