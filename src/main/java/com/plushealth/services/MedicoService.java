@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.plushealth.domains.Medico;
+import com.plushealth.domains.dtos.MedicoDTO;
 import com.plushealth.repositories.MedicoRepository;
 import com.plushealth.services.exceptions.ObjectNotFoundException;
 
@@ -23,6 +24,12 @@ public class MedicoService {
 
 	public List<Medico> findAll() {
 		return repository.findAll();
+	}
+
+	public Medico create(MedicoDTO objDTO) {
+		objDTO.setId(null);
+		Medico newObj = new Medico(objDTO);
+		return repository.save(newObj);
 	}
 	
 	

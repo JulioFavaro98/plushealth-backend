@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.plushealth.domains.dtos.MedicoDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,6 +47,16 @@ public class Medico implements Serializable {
 		this.especialidade = especialidade;
 		this.email = email;
 		this.telefone = telefone;
+	}
+	
+	public Medico(MedicoDTO obj) {
+		super();
+		this.id = obj.getId();
+		this.nome = obj.getNome();
+		this.crm = obj.getCrm();
+		this.especialidade = obj.getEspecialidade();
+		this.email = obj.getEmail();
+		this.telefone = obj.getTelefone();
 	}
 
 	public Integer getId() {
