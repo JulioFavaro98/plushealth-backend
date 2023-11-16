@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plushealth.domains.Medico;
+import com.plushealth.domains.dtos.MedicoDTO;
 import com.plushealth.services.MedicoService;
 
 @RestController
@@ -18,9 +19,9 @@ public class MedicoResource {
 	private MedicoService medicoService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Medico> findById(@PathVariable Integer id){
+	public ResponseEntity<MedicoDTO> findById(@PathVariable Integer id){
 		Medico obj = medicoService.findById(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(new MedicoDTO(obj));
 	}
 
 }
