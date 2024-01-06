@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,5 +48,11 @@ public class ConsultaResource {
 				.fromCurrentRequestUri().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<ConsultaDTO> update(@PathVariable Integer id, @Valid @RequestBody ConsultaDTO objDTO){
+		Consulta obj = service.update(id, objDTO);
+		return ResponseEntity.ok().body(new ConsultaDTO(obj));
 	}
 }

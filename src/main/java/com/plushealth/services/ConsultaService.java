@@ -39,6 +39,14 @@ public class ConsultaService {
 		return repository.save(newConsulta(objDTO));
 	}
 	
+	public Consulta update(Integer id, @Valid ConsultaDTO objDTO) {
+		objDTO.setId(id);
+		Consulta oldObj = findById(id);
+		oldObj = newConsulta(objDTO);
+		return repository.save(oldObj);
+		
+	}
+	
 	private Consulta newConsulta(ConsultaDTO obj) {
 		Medico medico = medicoService.findById(obj.getMedico());
 		Paciente paciente = pacienteService.findById(obj.getPaciente());
@@ -55,4 +63,6 @@ public class ConsultaService {
 		consulta.setStatusConsulta(Status.toEnum(obj.getStatusConsulta()));
 		return consulta;
 	}
+
+	
 }
