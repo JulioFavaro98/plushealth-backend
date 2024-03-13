@@ -58,11 +58,9 @@ public class DBService {
         Consulta consulta9 = new Consulta(null, LocalDate.now().plusDays(8), LocalTime.of(12, 0), Status.ENCERRADO, medico1, paciente1);
         Consulta consulta10 = new Consulta(null, LocalDate.now().plusDays(9), LocalTime.of(14, 0), Status.ABERTO, medico2, paciente2);
         
-        Usuario usuario1 = new Usuario(null, "Administrador", Role.ADM, "adm", "adm");
 
         pacienteRepository.saveAll(List.of(paciente1, paciente2, paciente3, paciente4, paciente5));
         medicoRepository.saveAll(List.of(medico1, medico2, medico3, medico4, medico5));
         consultaRepository.saveAll(List.of(consulta1, consulta2, consulta3, consulta4, consulta5, consulta6, consulta7, consulta8, consulta9, consulta10));
-        usuarioRepository.save(usuario1);
 	}
 }
