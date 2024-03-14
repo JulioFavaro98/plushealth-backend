@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.plushealth.domains.Usuario;
 import com.plushealth.domains.dtos.AutheticationDTO;
+import com.plushealth.domains.dtos.LoginResponseDTO;
 import com.plushealth.domains.dtos.RegistroDTO;
 import com.plushealth.repositories.UsuarioRepository;
+import com.plushealth.security.TokenService;
 
 import jakarta.validation.Valid;
 
@@ -27,12 +29,17 @@ public class AuthenticationController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private TokenService tokenService;
+	
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AutheticationDTO dados) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(dados.login(), dados.password());
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 		
-		return ResponseEntity.ok().build();
+		var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+		
+		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
 	
 	@PostMapping("/registro")
