@@ -1,6 +1,5 @@
 package com.plushealth.domains;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Usuario implements UserDetails, Serializable {
+public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	

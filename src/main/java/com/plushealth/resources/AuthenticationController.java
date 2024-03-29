@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,9 @@ public class AuthenticationController {
 		
 		var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 		
-		return ResponseEntity.ok(new LoginResponseDTO(token));
+		return ResponseEntity.ok()
+			.header("Authorization", token)
+			.body(new LoginResponseDTO(token));
 	}
 	
 	@PostMapping("/registro")
