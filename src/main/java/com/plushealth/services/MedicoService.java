@@ -59,7 +59,7 @@ public class MedicoService {
 	public void delete(Integer id) {
 		Medico obj = findById(id);
 		if(obj.getConsultas().size() > 0) {
-			throw new DataIntegrityViolationException("Tecnico possui ordens de serviço e não pode ser deletado!");
+			throw new DataIntegrityViolationException("Médico possui consultas marcadas e não pode ser deletado!");
 		} 
 		repository.deleteById(id);
 	}
