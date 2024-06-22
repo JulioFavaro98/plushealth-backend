@@ -45,6 +45,19 @@ public class TokenService {
 			return " ";
 		}
 	}
+
+	public String getLoginFromToken(String token) {
+		try {
+			Algorithm algorithm = Algorithm.HMAC256(secret);
+			return JWT.require(algorithm)
+					.withIssuer("plus-health")
+					.build()
+					.verify(token)
+					.getSubject();
+		} catch (JWTVerificationException exception) {
+			throw new RuntimeException("Token inválido ou expirado");
+		}
+	}
 	
 	private Instant getExpirationDate() {
 		return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));

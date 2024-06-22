@@ -7,4 +7,5 @@ import com.plushealth.domains.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	UserDetails findByLogin(String login);
+	Usuario findUserByLogin(String login);
 }

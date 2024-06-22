@@ -1,15 +1,13 @@
 package com.plushealth.resources;
 
+import com.plushealth.domains.dtos.ChangePasswordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.plushealth.domains.Usuario;
 import com.plushealth.domains.dtos.AutheticationDTO;
@@ -56,4 +54,21 @@ public class AuthenticationController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PostMapping("/change-password")
+	public ResponseEntity<Void> changePassword(@RequestBody @Valid ChangePasswordDTO dados,
+											   @RequestHeader("Authorization") String token) {
+		String login = tokenService.getLoginFromToken(token.replace("Bearer ", ""));
+		Usuario usuario = usuarioRepository.findUserByLogin(login);
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		if (!passwordEncoder.matches(dados.getOldPassword(), usuario.getPassword())) {
+			return ResponseEntity.status(403).build();
+		}
+
+		String newEncryptedPassword = passwordEncoder.encode(dados.getNewPassword());
+		usuario.setPassword(newEncryptedPassword);
+		usuarioRepository.save(usuario);
+
+		return ResponseEntity.ok().build();
+	}
 }
